@@ -18,7 +18,7 @@ Contributes:
 - We present and release Thought-Aligner, a plug‑in, lightweight module which corrects and aligns the thought on the fly for AI agents powered with LLMs of diverse scales.
 - We validate the effectiveness of Thought-Aligner on three agent safety benchmarks: Thought-Aligner increases the safety score to an average of 90%, approximately a 40% improvement over unprotected setups.
 
-If you require the Thought-Aligner-1.5B or a smaller variant, please contact us at whitzardindex@gmail.com.
+If you require the Thought-Aligner-1.5B or a smaller variant, please contact us at whitzardindex@fudan.edu.cn .
 
 <!-- Thought-Aligner 是一款通过在每次执行Action前实时纠正所有高风险Thought，来确保智能体行为轨迹安全的模型。纠正后的Thought会重新反馈给agent，以保障后续决策和工具调用更加安全可靠。该模型基于 Qwen2.5-7B-Instruct 微调而来。
 
