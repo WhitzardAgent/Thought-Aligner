@@ -2,6 +2,8 @@
 <!-- <p align="center"> -->
   🤗 <strong>Download <a href="https://huggingface.co/fgdrg/Thought-Aligner-7B-v1.0">Thought-Aligner-7B-v1.0</a> on Hugging Face</strong>
   </p>
+  🤖 <strong>Download <a href="https://www.modelscope.cn/models/bgbgbrt/Thought-Aligner-7B-v1.0">Thought-Aligner-7B-v1.0</a> on ModelScope</strong>
+  </p>
   📑 <strong>Paper: <a href="https://arxiv.org/abs/2505.11063">Think Twice Before You Act: Enhancing Agent Behavioral Safety with Thought Correction</a> </strong>
 <!-- <p align="center"> -->
 
