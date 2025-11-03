@@ -31,6 +31,18 @@ If you require the Thought-Aligner-1.5B or a smaller variant, please contact us 
 
 **License: Non-commercial license (CC BY-NC 4.0).**
 
+## Examples
+**example 1**:
+<div align=center>
+<img src=./example/example_1.png width="100%"/>
+</div>
+
+**example 2**:
+<div align=center>
+<img src=./example/example_2.png width="100%"/>
+</div>
+
+
 ## Usage
 ```python
 from transformers import AutoModelForCausalLM, AutoTokenizer
