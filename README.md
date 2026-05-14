@@ -12,64 +12,93 @@
 [Chinese README](README.zh-CN.md)
 </div>
 
-📌 **ICML 2026 accepted** — camera-ready version is available at `material/Thought_Aligner_ICML2026_camera_ready_v2.pdf`.
+📌 **Thought-Aligner has been accepted to ICML 2026 🎉🎉🎉**
+
+📑 **Paper**: [Think Twice Before You Act: Enhancing Agent Behavioral Safety with Thought Correction](https://arxiv.org/abs/2505.11063)
+
+**Model Download**
+- 🤗 Hugging Face: https://huggingface.co/WhitzardAgent/Thought-Aligner-7B
+- 🤖 ModelScope: https://www.modelscope.cn/models/bgbgbrt/Thought-Aligner-7B-v1.0
 
 ## Overview
-Thought-Aligner is a lightweight thought-correction plugin for LLM-powered agents that improves behavioral safety by intercepting and correcting high-risk internal reasoning before action execution.
+<div align=center>
+<img src=./example/logo.png width="36%"/>
+</div>
 
-Key strengths:
-- Real-time thought intervention for safer action trajectories.
-- Lightweight design for fast inference in deployed systems.
-- Tested on benchmarks and real robotics platforms.
+Thought-Aligner is a lightweight defense module for agent behavioral safety. It performs causal intervention on an agent's internal reasoning process (thoughts), correcting potentially unsafe thoughts in real time without interrupting the execution flow. This helps reduce risky decisions, unsafe tool use, and privacy-threatening behaviors during agent interaction.
 
-## Highlights
-- ✅ **ICML 2026 accepted** paper with camera-ready version in `material/Thought_Aligner_ICML2026_camera_ready_v2.pdf`.
-- ✅ Real-world deployment on **OpenClaw** robot platform with live control tests.
-- ✅ Demonstrated strong safety gains on **ToolEmu**, **PrivacyLens**, and **Agent-SafetyBench**.
-- ✅ Supports both **Thought-Aligner-7B** and **Thought-Aligner-1.5B**.
+Unlike conventional defenses that intervene only at the output stage, Thought-Aligner moves safety correction upstream to the **thought level without interrupting agent execution**, significantly improving behavioral safety while preserving utility and execution continuity.
+**This introduces a new paradigm for agent safety defense.**
+**OpenClaw real-world deployment demonstrates substantial gains in behavioral safety.**
 
-## What does Thought-Aligner do?
-Thought-Aligner monitors the agent’s current instruction-thought pair and performs on-the-fly correction of high-risk thoughts before passing them back to the agent.
-This ensures that the agent’s subsequent decisions and tool interactions are aligned with safer behavior.
 
-## Experimental results
-Our experiments show that Thought-Aligner significantly improves agent decision quality and reduces unsafe behavior across benchmarks and hardware deployment.
 
-- **Benchmarks:** ToolEmu, PrivacyLens, Agent-SafetyBench.
-- **Average safety improvement:** Thought-Aligner elevates safety performance to around **90%** across evaluated settings.
-- **Real deployment:** effective on the OpenClaw platform — validated with live tests and real environment feedback.
+## Key Highlights
+- ✅ **An add-on safety defense module for tool-using agents**, designed for easy integration into existing agent systems.
+- ✅ **Real-time thought-level correction**, mitigating high-risk reasoning before actions are executed while maintaining usefulness.
+- ✅ Strong gains across **ToolEmu, Agent-SafetyBench, AgentHarm, AgentDojo, and InjecAgent**, lifting overall agent safety to **over 90%** and outperforming other defenses by around **23% on average** in our evaluation.
+- ✅ **Validated on real-world OpenClaw deployment**, demonstrating effectiveness in practical sensing, decision-making, and control loops.
+- ✅ Available in **Thought-Aligner-7B** and **Thought-Aligner-1.5B** variants; lightweight and efficient, with the **1.5B** model achieving per-thought repair latency below **100 ms** on a standard PC.
+- ✅ **Plug-and-play architecture** that adapts to diverse LLM backends and agent frameworks with minimal deployment overhead.
+
+## How Thought-Aligner Works
+Thought-Aligner operates within the millisecond-scale window between an agent producing its Thought / Action and the actual execution of that Action. Its core workflow is:
+
+1. Monitor the internal Thought generated in the current interaction step.
+2. Identify high-risk reasoning patterns that may lead to unsafe behavior.
+3. Correct unsafe thoughts in real time and feed the revised safe Thought back to the agent.
+4. Let the agent regenerate subsequent decisions and actions based on a safer context.
+
+Even when the corrected Thought does not immediately change the current Action or Action Input, it remains in the interaction history and continues to exert causal influence on the agent's subsequent multi-turn reasoning and behavior.
+
+## Why Thought-Aligner
+- **Low-latency and low-intrusion**: integrates smoothly into existing reasoning and execution pipelines.
+- **Safety before execution**: addresses risks at their source before actions are carried out.
+- **Utility-preserving**: avoids overly aggressive blocking that can degrade agent capability.
+- **Deployment-ready**: validated not only on benchmarks, but also on a real platform.
+- **Scalable and extensible**: suitable for different model sizes, task types, and agent systems.
 
 ![Thought-Aligner architecture](example/pic/thought_aligner.png)
 
-### Experimental figures
+## Experimental Results
+We conduct systematic evaluation of Thought-Aligner across multiple public safety benchmarks and real deployment settings.
 
-#### Main results table
+- **Benchmarks**: ToolEmu, Agent-SafetyBench, AgentHarm, AgentDojo, InjecAgent.
+- **Overall outcome**: Thought-Aligner raises overall agent safety to **90%+** under comprehensive evaluation settings.
+- **Real deployment**: **OpenClaw** experiments show that the method remains effective in real control loops.
+
+### Main Results
+#### Primary result tables
 ![Main results table](example/pic/table_main.png)
+![Main results table](example/pic/table_3.png)
 
-#### Detailed evaluation table
-![Detailed evaluation table](example/pic/table_1.png)
-
-#### Benchmark comparison table
+#### OpenClaw deployment results
 ![Benchmark comparison table](example/pic/table_cikbencj.png)
 
-#### Deployment / scatter analysis
+#### Detailed evaluation and scatter analysis
+![Detailed evaluation table](example/pic/table_1.png)
 ![Deployment scatter analysis](example/pic/scatter_14.png)
 
-## Why Thought-Aligner?
-- Low overhead: small module that can be added to existing agent pipelines.
-- Robust safety: intercepts unsafe thoughts before actions are issued.
-- Real-world ready: validated in physical OpenClaw robot deployment with improved behavior.
-- Scalable: works with diverse LLM backbones and different agent setups.
+## Model
+Thought-Aligner-7B is fine-tuned from Qwen2.5-7B-Instruct and is designed for real-time Thought correction in agent environments. The model emphasizes strong defensive effectiveness with low deployment cost, making it suitable for both software agents and future embodied-agent scenarios.
 
-## Model details
-Thought-Aligner is fine-tuned on **Qwen2.5-7B-Instruct** and optimized for safe reasoning in agent environments.
-It is designed to be a plug-in component that can be combined with LLM-based decision-making systems and embodied agents.
+## Examples
+**example 1**:
+<div align=center>
+<img src=./example/example_1.png width="100%"/>
+</div>
 
-## Download
-- 🤗 Download **Thought-Aligner-7B** on Hugging Face: https://huggingface.co/WhitzardAgent/Thought-Aligner-7B
-- 🤖 Download **Thought-Aligner-7B** on ModelScope: https://www.modelscope.cn/models/bgbgbrt/Thought-Aligner-7B-v1.0
+**example 2**:
+<div align=center>
+<img src=./example/example_2.png width="100%"/>
+</div>
 
-## Usage
+**example 3**:
+<div align=center>
+<img src=./example/example_3.png width="100%"/>
+</div>
+
+## Usage Example
 ```python
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
@@ -103,7 +132,7 @@ print(resp)
 ```
 
 ## Citation
-If you find our work helpful, please cite:
+If this work is helpful to your research or applications, please consider citing:
 
 ```bibtex
 @article{jiang2025think,
@@ -115,4 +144,4 @@ If you find our work helpful, please cite:
 ```
 
 ## License
-Non-commercial license (CC BY-NC 4.0).
+This project is released under the non-commercial **CC BY-NC 4.0** license.

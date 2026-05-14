@@ -12,62 +12,82 @@
 [English README](README.md)
 </div>
 
-📌 **Thought-Aligner 被 ICML 2026 录用啦 🎉🎉🎉**
+📌 **Thought-Aligner 已被 ICML 2026 录用 🎉🎉🎉** 
 
- 📑 <strong>Paper: <a href="https://arxiv.org/abs/2505.11063">Think Twice Before You Act: Enhancing Agent Behavioral Safety with Thought Correction</a> </strong>
+📑 **论文**: [Think Twice Before You Act: Enhancing Agent Behavioral Safety with Thought Correction](https://arxiv.org/abs/2505.11063)
+
+**模型下载**：
+- 🤗 Hugging Face: https://huggingface.co/WhitzardAgent/Thought-Aligner-7B
+- 🤖 ModelScope: https://www.modelscope.cn/models/bgbgbrt/Thought-Aligner-7B-v1.0
+
 
 ## 项目简介
-Thought-Aligner 是一个轻量级的思路纠偏插件，专为 LLM 驱动的智能体设计。它通过在每次执行动作前实时纠正高风险的内部思路，从而提升行为安全性。
 
-## 模型下载
-- 🤗 下载 **Thought-Aligner-7B**：https://huggingface.co/WhitzardAgent/Thought-Aligner-7B
-- 🤖 下载 **Thought-Aligner-7B**：https://www.modelscope.cn/models/bgbgbrt/Thought-Aligner-7B-v1.0
+<div align=center>
+<img src=./example/logo.png width="36%"/>
+</div>
 
-## 主要亮点
-- ✅ **OpenClaw 实机部署测试**，验证了 Thought-Aligner 在真实智能体平台上的有效性。
-- ✅ 在 **ToolEmu、Agent-SafetyBench、AgentHarm、AgentDojo、InjecAgent** 多个安全基准上表现显著。
-- ✅ **Thought-Aligner-7B** 和 **Thought-Aligner-1.5B** 两个模型规模，轻量、高效、资源节约。
-- ✅ 插拔式组件，适用于多种 LLM 架构和代理系统。
+Thought-Aligner 是一个面向智能体行为安全的轻量级防御模块。它通过对智能体交互过程中的内部推理（Thought）进行因果干预，在不打断任务执行流程的前提下，实时修正潜在不安全的 Thought，从而降低危险决策、错误工具调用与隐私泄露等风险。
 
-## Thought-Aligner 的作用
-Thought-Aligner 监控智能体当前的指令-思路对，在动作执行前对潜在高风险思路进行实时纠正，并将更安全的思路反馈给智能体。
-这样可以降低后续决策中的危险行为和错误工具调用。
+与传统在输出端拦截或拒绝执行的防御方式不同，Thought-Aligner 将安全修正前移至 **Thought 层，不中断智能体的执行**，在显著提升智能体行为安全性的同时尽可能保留任务可用性与执行连续性。
+**这为智能体安全防御提供了一种全新的范式。**
+**OpenClaw龙虾实测，显著提升行为安全性。**
 
-## 实验结果
-我们在多个基准和真实部署场景中进行了系统验证：
 
-- **基准测试**：ToolEmu、Agent-SafetyBench、AgentHarm、AgentDojo、InjecAgent。
-- **平均安全提升**：Thought-Aligner 将整体安全性能提升至 **90%以上**。
-- **实机验证**：**OpenClaw** 部署测试成功，表明 Thought-Aligner 在真实控制与决策环境中有效。
+
+
+## 核心亮点
+- ✅ **面向工具调用型智能体的外挂式安全防御模块**，易于接入现有 Agent 系统。
+- ✅ **Thought 层实时修正**，在动作执行前完成高风险推理纠偏，兼顾安全性与可用性。
+- ✅ 在 **ToolEmu、Agent-SafetyBench、AgentHarm、AgentDojo、InjecAgent** 等多个基准上取得显著收益，整体安全性提升至 **90% 以上**，平均较其他防御方法高约 **23%**。
+- ✅ 已完成 **OpenClaw龙虾 实机部署验证**，证明其在真实感知、决策与控制闭环中的有效性。
+- ✅ 提供 **Thought-Aligner-7B** 与 **Thought-Aligner-1.5B** 两个模型规模，轻量高效；其中 **1.5B** 版本在标准 PC 上单次 Thought 修复延迟低于 **100 ms**。
+- ✅ **插拔式设计**，可适配多种 LLM 后端与智能体框架，部署成本低、迁移灵活。
+
+## Thought-Aligner 如何工作
+Thought-Aligner 在智能体每轮交互过程中，位于 Agent 生成 Thought / Action 与实际执行 Action 之间的毫秒级窗口内运行。其核心流程可以概括为：
+
+1. 监控智能体当前轮次产生的内部 Thought。
+2. 识别其中可能引发危险行为的高风险推理模式。
+3. 对不安全 Thought 进行实时修正，并将修正后的安全 Thought 回填给智能体。
+4. 让智能体基于更安全的上下文重新生成后续决策与动作。
+
+即便修正后的 Thought 没有立刻改变当前轮次的 Action 或 Action Input，这一更安全的 Thought 仍会作为后续上下文的一部分，对未来多轮推理与行为产生持续性的因果干预。
+
+## 为什么选择 Thought-Aligner
+- **低延迟、低侵入**：可无缝集成到现有推理与执行链路中。
+- **安全前移**：在动作真正执行前修正风险源头，而非事后拦截。
+- **兼顾有用性**：尽量避免因过度拒绝而削弱智能体能力。
+- **真实可部署**：不仅在基准上有效，也已在真实平台完成验证。
+- **良好扩展性**：适用于不同模型规模、不同任务类型与不同智能体系统。
 
 ![Thought-Aligner 架构](example/pic/thought_aligner.png)
 
-### 关键图表
+## 实验结果
+我们在多个公开安全基准与真实部署场景中，对 Thought-Aligner 的防御效果进行了系统评估。
 
-#### 主要结果表
+- **评测基准**：ToolEmu、Agent-SafetyBench、AgentHarm、AgentDojo、InjecAgent。
+- **整体表现**：在综合评测设置下，Thought-Aligner 将智能体整体安全水平提升至 **90%+**。
+- **真实部署**：**OpenClaw龙虾** 实机实验表明，Thought-Aligner 能在真实控制闭环中稳定发挥防御作用。
+
+### 主要结果
+#### 主结果表
 ![主要结果表](example/pic/table_main.png)
+![主要结果表](example/pic/table_3.png)
 
-#### 详细评估表
-![详细评估表](example/pic/table_1.png)
-
-#### 基准对比表
+#### OpenClaw龙虾 实机部署效果
 ![基准对比表](example/pic/table_cikbencj.png)
 
-#### 部署/散点分析
+#### 详细评估与散点分析
+![详细评估表](example/pic/table_1.png)
 ![部署/散点分析](example/pic/scatter_14.png)
 
-## 为什么选择 Thought-Aligner？
-- 轻量低延迟：可以无缝并入现有智能体推理链路。
-- 强化安全性：在动作执行前消除高风险内部思路。
-- 实机可用：已在 OpenClaw 真实平台上验证。
-- 可扩展：适配多种 LLM 和不同类型的代理系统。
-
-## 模型详情
-Thought-Aligner 基于 **Qwen2.5-7B-Instruct** 微调，专注于智能体行为安全的实时思路纠正。
-它是一种插件式模块，可与现有 LLM 决策系统和具身智能体结合使用。
+## 模型
+Thought-Aligner-7B 基于 Qwen2.5-7B-Instruct 微调，专注于智能体场景下的实时 Thought 修正。其设计目标是在保证防御效果的同时，尽可能降低部署开销，因此既适合软件智能体，也具备向具身智能体与真实环境迁移的潜力。
 
 
-## 实际效果案例
+
+## 效果示例
 **example 1**:
 <div align=center>
 <img src=./example/example_1.png width="100%"/>
@@ -82,8 +102,6 @@ Thought-Aligner 基于 **Qwen2.5-7B-Instruct** 微调，专注于智能体行为
 <div align=center>
 <img src=./example/example_3.png width="100%"/>
 </div>
-
-
 
 ## 使用示例
 ```python
@@ -119,7 +137,7 @@ print(resp)
 ```
 
 ## 引用
-如果我们的工作对您有帮助，请引用：
+如果本工作对您的研究或应用有所帮助，欢迎引用：
 
 ```bibtex
 @article{jiang2025think,
@@ -131,4 +149,4 @@ print(resp)
 ```
 
 ## 许可证
-非商业许可证 (CC BY-NC 4.0)。
+本项目采用非商业许可证 **CC BY-NC 4.0**。
