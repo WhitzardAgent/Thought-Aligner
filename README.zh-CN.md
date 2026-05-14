@@ -7,7 +7,7 @@
 [![ICML 2026 录用](https://img.shields.io/badge/ICML-2026-green.svg)](material/Thought_Aligner_ICML2026_camera_ready_v2.pdf)
 [![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-blue.svg)](LICENSE)
 
-**WhitzardAgent | 上海创新研究院 (SII) | 复旦大学**
+**WhitzardAgent | 上海创智学院 (SII) | 复旦大学**
 
 [English README](README.md)
 </div>
