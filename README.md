@@ -22,7 +22,7 @@
 
 ## Overview
 <div align=center>
-<img src=./example/logo.png width="36%"/>
+<img src=./example/logo.png width="18%"/>
 </div>
 
 Thought-Aligner is a lightweight defense module for agent behavioral safety. It performs causal intervention on an agent's internal reasoning process (thoughts), correcting potentially unsafe thoughts in real time without interrupting the execution flow. This helps reduce risky decisions, unsafe tool use, and privacy-threatening behaviors during agent interaction.

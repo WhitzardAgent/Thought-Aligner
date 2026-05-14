@@ -24,7 +24,7 @@
 ## 项目简介
 
 <div align=center>
-<img src=./example/logo.png width="36%"/>
+<img src=./example/logo.png width="18%"/>
 </div>
 
 Thought-Aligner 是一个面向智能体行为安全的轻量级防御模块。它通过对智能体交互过程中的内部推理（Thought）进行因果干预，在不打断任务执行流程的前提下，实时修正潜在不安全的 Thought，从而降低危险决策、错误工具调用与隐私泄露等风险。
