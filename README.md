@@ -7,7 +7,7 @@
 [![ICML 2026 Accepted](https://img.shields.io/badge/ICML-2026-green.svg)](material/Thought_Aligner_ICML2026_camera_ready_v2.pdf)
 [![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-blue.svg)](LICENSE)
 
-**WhitzardAgent | Shanghai Innovation Institute (SII) | Fudan University**
+**Shanghai Innovation Institute (SII) | Fudan University | WhitzardAgent**
 
 [Chinese README](README.zh-CN.md)
 </div>
