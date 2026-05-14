@@ -12,7 +12,7 @@
 [English README](README.md)
 </div>
 
-📌 **Thought-Aligner 已被 ICML 2026 录用 🎉🎉🎉** 
+📌 **Thought-Aligner 被 ICML 2026 接收啦 🎉🎉🎉** 
 
 📑 **论文**: [Think Twice Before You Act: Enhancing Agent Behavioral Safety with Thought Correction](https://arxiv.org/abs/2505.11063)
 
